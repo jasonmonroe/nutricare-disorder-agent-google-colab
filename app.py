@@ -275,7 +275,7 @@ def check_program_keys() -> bool:
         "GROQ_API_KEY": GROQ_API_KEY,
         "LLAMA_KEY": LLAMA_KEY, # This is the alias for os.getenv("LLAMA_KEY")
         "MEM0_API_KEY": MEM0_API_KEY,
-        "OPENAI_API_KEY": OPENAI_API_KEY, # formerly config.json("API_KEY")
+        "OPENAI_API_KEY": OPENAI_API_KEY,
         "OPENAI_API_BASE": OPENAI_API_BASE,
     }
 
