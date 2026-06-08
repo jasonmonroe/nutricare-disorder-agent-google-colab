@@ -177,6 +177,7 @@ cp env.example .env
 | Variable | Purpose |
 |----------|---------|
 | `GROQ_API_KEY` | Groq Cloud — Llama Guard safety filtering |
+| `HF_REPO_ID` | Hugging Face — repository ID |
 | `HF_TOKEN` | Hugging Face — model and Space authentication |
 | `LLAMA_KEY` | LlamaIndex / LlamaParse — PDF parsing |
 | `MEM0_API_KEY` | Mem0 — conversational memory |
