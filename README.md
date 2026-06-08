@@ -254,7 +254,7 @@ nutricare-disorder-agent-google-colab/
 
 ## Google Colab origin
 
-This project started in **Google Colab** as **Project 3: Smart Nutrition Disorder Specialist Bot** — a Generative AI capstone focused on building and deploying an agentic RAG system. The original learner notebook ([`smart_nutrition_disorder_specialist_bot_init.ipynb`](notebooks/smart_nutrition_disorder_specialist_bot_init.ipynb.ipynb)) provided the scaffold; the complete notebook ([`nutricare_disorder_agent.ipynb`](notebooks/nutricare_disorder_agent.ipynb)) contains the full working pipeline.
+This project started in **Google Colab** as **Project 3: Smart Nutrition Disorder Specialist Bot** — a Generative AI capstone focused on building and deploying an agentic RAG system. The original learner notebook ([`smart_nutrition_disorder_specialist_bot_init.ipynb`](notebooks/smart_nutrition_disorder_specialist_bot_init.ipynb)) provided the scaffold; the complete notebook ([`nutricare_disorder_agent.ipynb`](notebooks/nutricare_disorder_agent.ipynb)) contains the full working pipeline.
 
 Development progressed through:
 
