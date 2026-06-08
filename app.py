@@ -1,37 +1,52 @@
-
-######################## WRITE YOUR CODE HERE  #########################
-#
 # app.py
-# Published by Jason Monroe
-# jason@jasonmonroe.com
-# Date Created: 2024-11-16
-# Script for AI Agent for Huggingface Space
-# https://huggingface.co/spaces/jasonmonroe/smart-nutri-disorder-specialist-bot
-#
-# [MODULE NAME]: app.py
-#
-# Description:
-#    A Streamlit-based AI chatbot application that acts as a "Nutrition Disorder Specialist."
-#    This script performs the following key functions:
-#    1.  **Document Ingestion & Processing:** Loads and parses PDF documents from a specified directory (`Nutritional Medical Reference`). It uses LlamaParse to extract text and structured data (tables).
-#     2.  **Vectorization & Storage:** Chunks the processed text using semantic chunking and stores the text, along with hypothetical questions generated from the content, into a Chroma vector database. This creates a searchable knowledge base.
-#     3.  **Agentic RAG Workflow:** Implements a sophisticated Retrieval-Augmented Generation (RAG) workflow using LangGraph. This workflow includes steps for query expansion, context retrieval, response generation, and self-correction loops for groundedness and precision.
-#     4.  **Conversational AI:** Provides a conversational interface where users can ask questions about nutritional disorders. It uses a `NutritionBot` class that manages user sessions, conversation history (with Mem0), and interacts with the RAG agent.
-#     5.  **Safety & Moderation:** Filters user input using Llama Guard to prevent inappropriate or harmful queries.
-#
-# Dependencies:
-#     - streamlit: For the web application interface.
-#     - langchain, langgraph, llama_parse, llama_index: Core libraries for the RAG pipeline and agentic workflow.
-#     - chromadb: For vector storage and retrieval.
-#     - openai, groq: For accessing LLMs and safety models.
-#     - mem0: For managing conversational memory.
-#     - dotenv: For managing environment variables.
-#     - numpy, pandas: For data manipulation.
-#
-# Usage:
-#     Run the script as a Streamlit application. The application will start a chat interface
-#     where users can log in with a name and ask questions about nutritional disorders.
-#
+
+"""Nutrition Disorder Specialist Streamlit Application.
+
+This module implements a Streamlit-based AI chatbot application that acts as a
+"Nutrition Disorder Specialist." It leverages an advanced Agentic RAG workflow
+to process medical reference documents and provide grounded, safe answers.
+
+Key Functions:
+    1. Document Ingestion & Processing: Loads and parses PDF documents from a
+       specified directory (`Nutritional Medical Reference`) using LlamaParse
+       to extract text and structured tables.
+    2. Vectorization & Storage: Chunks processed text using semantic chunking
+       and stores the text, along with generated hypothetical questions, into
+       a Chroma vector database.
+    3. Agentic RAG Workflow: Implements a sophisticated Retrieval-Augmented
+       Generation (RAG) workflow using LangGraph, including query expansion,
+       context retrieval, response generation, and self-correction loops.
+    4. Conversational AI: Provides a chat interface via a `NutritionBot` class
+       that manages user sessions and conversation history using Mem0.
+    5. Safety & Moderation: Filters user input using Llama Guard to prevent
+       inappropriate or harmful queries.
+
+Dependencies:
+    - streamlit: Web application interface.
+    - langchain, langgraph, llama_parse, llama_index: RAG pipeline and agentic
+      workflow orchestration.
+    - chromadb: Vector storage and retrieval.
+    - openai, groq: LLM infrastructure and safety models.
+    - mem0: Conversational memory management.
+    - dotenv: Environment variable configuration.
+    - numpy, pandas: Data manipulation.
+
+Usage:
+    Run the script as a Streamlit application:
+        $ streamlit run app.py
+    The application will launch a chat interface where users can log in with
+    a name and ask questions about nutritional disorders.
+"""
+
+__author__ = "Jason Monroe (jason@jasonmonroe.com)"
+__copyright__ = "Copyright 2024, Scripts for AI Agent for Huggingface Space"
+__credits__ = ["Jason Monroe"]
+__license__ = "Proprietary"
+__version__ = "1.0.0"
+__maintainer__ = "Jason Monroe"
+__email__ = "jason@jasonmonroe.com"
+__status__ = "Production"
+
 
 # --- IMPORT LIBRARIES
 
@@ -100,7 +115,8 @@ from datetime import datetime, UTC
 # see: https://hugginface.co
 # see: Model -> https://huggingface.co/jasonmonroe/smart-nutri-disorder-specialist-model
 # see: Space -> https://huggingface.co/jasonmonroe/smart-nutri-disorder-specialist-bot
-HF_REPO_ID = "jasonmonroe/smart-nutri-disorder-specialist-bot"
+# Note: Use your own HuggingFace Repo ID
+HF_REPO_ID= os.getenv("HF_REPO_ID")
 HF_TOKEN = os.getenv("HF_TOKEN")
 
 # Groq
@@ -118,9 +134,9 @@ MEM0_API_KEY = os.getenv("MEM0_API_KEY")  # Fill in your Mem0 API key
 
 # OpenAI
 # see: https://openai.com/api/
-# see: https://olympus.mygreatlearning.com/courses/129359/modules/items/7809007?pb_id=18908
+
 OPENAI_API_BASE = os.getenv("OPENAI_API_BASE")  # Fill in the OpenAI API base URL (e.g., "https://api.openai.com/v1")
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")  # Fill in your OpenAI API Token (from My Great Learning)
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")  # Fill in your OpenAI API Token (from vendor)
 OPENAI_EMB_MODEL = "text-embedding-3-small"  # embedding models "text-embedding-ada-002", "text-embedding-3-large"
 OPENAI_MODEL = "gpt-4o-mini"  # Fill in the OpenAI model name (e.g., "gpt-4o-mini")
 
@@ -943,8 +959,6 @@ def agentic_rag(query: str):
 class NutritionBot:
     def __init__(self):
         """
-        # see: https://olympus.mygreatlearning.com/courses/129359/modules/items/7899896?pb_id=18908
-
         Initialize the NutritionBot class, setting up memory, the LLM client, tools, and the agent executor.
         """
 
