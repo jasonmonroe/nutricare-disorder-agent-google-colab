@@ -36,7 +36,7 @@ The `notebooks/` directory documents the full development journey from the origi
 
 | File | Description |
 |------|-------------|
-| [`GA_NLP_Project_3_DetailedHints_Learner's_Notebook.ipynb`](notebooks/GA_NLP_Project_3_DetailedHints_Learner's_Notebook.ipynb) | **Original starter notebook** from Google Colab (Great Learning capstone). Contains the business use case, learning objectives, and guided hints for building the RAG pipeline step by step. |
+| [`smart_nutrition_disorder_specialist_bot_init.ipynb`](notebooks/smart_nutrition_disorder_specialist_bot_init.ipynb.ipynb) | **Original starter notebook** from Google Colab (Starter Notebook capstone). Contains the business use case, learning objectives, and guided hints for building the RAG pipeline step by step. |
 | [`nutricare_disorder_agent.ipynb`](notebooks/nutricare_disorder_agent.ipynb) | **Complete implementation** — the finished notebook with all code, outputs, and workflow definitions. This is the authoritative reference for how the system was built. |
 | [`nutricare_disorder_agent.html`](notebooks/nutricare_disorder_agent.html) | **Browser-friendly export** of the complete notebook. Open this file in any web browser to read the full project without Jupyter or Colab. |
 
@@ -227,6 +227,8 @@ A hosted version is available on Hugging Face:
 
 **[smart-nutri-disorder-specialist-bot](https://huggingface.co/spaces/jasonmonroe/smart-nutri-disorder-specialist-bot)**
 
+Note: Be sure to create your own hosting space, model and bot.
+
 ---
 
 ## Project structure
@@ -236,7 +238,7 @@ nutricare-disorder-agent-google-colab/
 ├── app.py                                          # Streamlit app (Section 2–3 port)
 ├── env.example                                     # Environment variable template
 ├── notebooks/
-│   ├── GA_NLP_Project_3_DetailedHints_Learner's_Notebook.ipynb  # Original Colab starter
+│   ├── smart_nutrition_disorder_specialist_bot_init.ipynb  # Original Colab starter
 │   ├── nutricare_disorder_agent.ipynb              # Complete implementation
 │   └── nutricare_disorder_agent.html               # Browser-viewable export
 ├── Nutritional_Medical_Reference.zip               # Source PDF archive
@@ -252,7 +254,7 @@ nutricare-disorder-agent-google-colab/
 
 ## Google Colab origin
 
-This project started in **Google Colab** as **Project 3: Smart Nutrition Disorder Specialist Bot** — a Generative AI capstone focused on building and deploying an agentic RAG system. The original learner notebook ([`GA_NLP_Project_3_DetailedHints_Learner's_Notebook.ipynb`](notebooks/GA_NLP_Project_3_DetailedHints_Learner's_Notebook.ipynb)) provided the scaffold; the complete notebook ([`nutricare_disorder_agent.ipynb`](notebooks/nutricare_disorder_agent.ipynb)) contains the full working pipeline.
+This project started in **Google Colab** as **Project 3: Smart Nutrition Disorder Specialist Bot** — a Generative AI capstone focused on building and deploying an agentic RAG system. The original learner notebook ([`smart_nutrition_disorder_specialist_bot_init.ipynb`](notebooks/smart_nutrition_disorder_specialist_bot_init.ipynb.ipynb)) provided the scaffold; the complete notebook ([`nutricare_disorder_agent.ipynb`](notebooks/nutricare_disorder_agent.ipynb)) contains the full working pipeline.
 
 Development progressed through:
 
