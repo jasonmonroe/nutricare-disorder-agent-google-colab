@@ -205,7 +205,7 @@ def start_timer() -> float:
 
 def get_time(start_time_int: float) -> str:
     diff = abs(time.time() - start_time_int)
-    hours, remainder = divmod(diff, (SECS_IN_MIN*SECS_IN_MIN))
+    _, remainder = divmod(diff, (SECS_IN_MIN*SECS_IN_MIN))
     minutes, seconds = divmod(remainder, SECS_IN_MIN)
     fractional_seconds = seconds - int(seconds)
     ms = fractional_seconds * MILLI_IN_SECS
@@ -272,11 +272,14 @@ def check_program_keys() -> bool:
     # Load keys and check if any or missing to kill the script.
     keys_to_check = {
         "HF_TOKEN": HF_TOKEN,
+        "HF_REPO_ID": HF_REPO_ID,
         "GROQ_API_KEY": GROQ_API_KEY,
         "LLAMA_KEY": LLAMA_KEY, # This is the alias for os.getenv("LLAMA_KEY")
+        "LLAMA_MODEL": LLAMA_MODEL,
         "MEM0_API_KEY": MEM0_API_KEY,
         "OPENAI_API_KEY": OPENAI_API_KEY,
         "OPENAI_API_BASE": OPENAI_API_BASE,
+        "OPENAI_MODEL": OPENAI_MODEL
     }
 
     missing_keys = []
@@ -373,7 +376,7 @@ embedding_model = OpenAIEmbeddings(
 
 # Initialize the Chat OpenAI model
 llm = ChatOpenAI(
-    base_url=OPENAI_API_BASE,         # Fill in the endpoint
+    bopenai_api_base=OPENAI_API_BASE,         # Fill in the endpoint
     openai_api_key=OPENAI_API_KEY,  # Fill in the API key
     model=OPENAI_MODEL,               # Fill in the deployment name (e.g., gpt-4o-mini)
     streaming=False,
@@ -427,7 +430,7 @@ class AgentState(TypedDict):
 # AI AGENT HELPER QUERIES
 
 # Function to filter user input with Llama Guard
-def filter_input_with_llama_guard(user_input_str: str, model=LLAMA_MODEL) -> str:
+def filter_input_with_llama_guard(user_input_str: str) -> str:
     """
     Filters user input using Llama Guard to ensure it is safe.
     Whitelist "UNSAFE" codes: S6, S7, S8, S13 so that you can handle the customer query.
@@ -447,7 +450,7 @@ def filter_input_with_llama_guard(user_input_str: str, model=LLAMA_MODEL) -> str
                 "role": "user",
                 "content": user_input_str
             }],
-            model=model,
+            model=LLAMA_MODEL,
         )
 
         # Return the filtered input
@@ -580,7 +583,7 @@ def craft_response(state: Dict) -> Dict:
     """
     print("\n--- craft_response ---")
 
-    system_message = """
+    system_message = f"""
     You are an expert AI {ROLE}, specializing in **Nutritional Disorders**. Your sole task is to analyze the provided CONTEXT and synthesize a direct, comprehensive answer to the user's QUERY.
 
     **STRICT GENERATION RULES:**
@@ -630,7 +633,7 @@ def score_groundedness(state: Dict) -> Dict:
 
     print("\n--- check_groundedness ---")
 
-    system_message = """You are a meticulous AI {ROLE} Quality Analyst and fact-checker. Your sole task is to evaluate how well a given response is supported by a provided context.
+    system_message = f"""You are a meticulous AI {ROLE} Quality Analyst and fact-checker. Your sole task is to evaluate how well a given response is supported by a provided context.
     Calculate a score from 0.0 to 1.0 that represents the fraction of claims in the response that are directly and verifiably supported by the context.
     - A score of 1.0 means every claim in the response is fully supported by the context.
     - A score of 0.0 means no claims in the response are supported by the context.
@@ -675,7 +678,7 @@ def check_precision(state: Dict) -> Dict:
 
     print("\n--- check_precision ---")
 
-    system_message = """
+    system_message = f"""
     As an AI {ROLE} evaluate whether the response precisely addresses the user's query.
     Evaluate, assign and return the precision score for the response.  Your evaluation is based solely on the relationship between the response and the query. Do not consider anything else.
 
@@ -721,7 +724,7 @@ def refine_response(state: Dict) -> Dict:
 
     print("\n--- refine_response ---")
 
-    system_message = """
+    system_message = f"""
     You are an AI {ROLE} Quality Analyst and Critic. Your sole task is to provide constructive feedback on a given response based on the user's original query.
     Your feedback should identify potential gaps, ambiguities, or missing details and suggest specific improvements to enhance the response's accuracy and completeness.
 
@@ -771,7 +774,7 @@ def refine_query(state: Dict) -> Dict:
         term_clarifications: List[str]
 
     # This prompt forces the JSON structure and ensures high-quality clinical input
-    system_message = f"""
+    system_message = """
     You are an AI Search Query Analyst specializing in clinical nutrition literature.
     Your sole task is to provide constructive feedback on the provided expanded query to enhance its search precision for academic databases.
 
